@@ -15,33 +15,53 @@ public class TestContactCreation {
     public void setUp() throws Exception {
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        wd.get("http://localhost/addressbook/edit.php");
+        login("admin", "secret");
+    }
+
+    private void login(String username, String password) {
+        wd.findElement(By.name("user")).click();
+        wd.findElement(By.name("user")).clear();
+        wd.findElement(By.name("user")).sendKeys(username);
+        wd.findElement(By.name("pass")).clear();
+        wd.findElement(By.name("pass")).sendKeys(password);
+        wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
 
     @Test
     public void testContactCreation() throws Exception {
-        wd.get("http://localhost/addressbook/edit.php");
-        wd.findElement(By.name("user")).click();
-        wd.findElement(By.name("user")).clear();
-        wd.findElement(By.name("user")).sendKeys("admin");
-        wd.findElement(By.name("pass")).clear();
-        wd.findElement(By.name("pass")).sendKeys("secret");
-        wd.findElement(By.xpath("//input[@value='Login']")).click();
-        wd.findElement(By.linkText("add new")).click();
+        gotoContactPage();
+        fillContactForm("Кондрат", "Кулигин", "749512345", "kuligin@mail.ru");
+        submitContactCreation();
+        gotoHomePage();
+        wd.findElement(By.linkText("Logout")).click();
+    }
+
+    private void gotoHomePage() {
+        wd.findElement(By.linkText("home page")).click();
+    }
+
+    private void submitContactCreation() {
+        wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
+    }
+
+    private void fillContactForm(String firstname, String lastname, String workphone, String email) {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
-        wd.findElement(By.name("firstname")).sendKeys("Кондрат");
+        wd.findElement(By.name("firstname")).sendKeys(firstname);
         wd.findElement(By.name("lastname")).click();
         wd.findElement(By.name("lastname")).clear();
-        wd.findElement(By.name("lastname")).sendKeys("Кулигин");
+        wd.findElement(By.name("lastname")).sendKeys(lastname);
         wd.findElement(By.name("work")).click();
         wd.findElement(By.name("work")).clear();
-        wd.findElement(By.name("work")).sendKeys("749512345");
+        wd.findElement(By.name("work")).sendKeys(workphone);
         wd.findElement(By.name("email")).click();
         wd.findElement(By.name("email")).clear();
-        wd.findElement(By.name("email")).sendKeys("kuligin@mail.ru");
-        wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
-        wd.findElement(By.linkText("home page")).click();
-        wd.findElement(By.linkText("Logout")).click();
+        wd.findElement(By.name("email")).sendKeys(email);
+    }
+
+    private void gotoContactPage() {
+        wd.findElement(By.linkText("add new")).click();
     }
 
     @AfterClass(alwaysRun = true)
