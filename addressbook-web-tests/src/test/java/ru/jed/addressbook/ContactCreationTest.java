@@ -7,7 +7,7 @@ import org.testng.annotations.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class TestContactCreation {
+public class ContactCreationTest {
     private WebDriver wd;
 
 
