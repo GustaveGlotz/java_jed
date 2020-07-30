@@ -1,4 +1,4 @@
-package ru.jed.addressbook.tests;
+package ru.jed.addressbook;
 
 import java.util.concurrent.TimeUnit;
 
@@ -6,13 +6,12 @@ import org.testng.annotations.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.jed.addressbook.model.ContactData;
 
-public class ContactCreationTest extends TestBase {
+public class ContactCreationTest {
     private WebDriver wd;
 
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -30,7 +29,7 @@ public class ContactCreationTest extends TestBase {
     }
 
     @Test
-    public void testContactCreation() throws Exception {
+    public void ContactCreation() throws Exception {
         gotoContactPage();
         fillContactForm(new ContactData("Кондрат", "Кулигин", "749512345", "kuligin@mail.ru"));
         submitContactCreation();
@@ -65,7 +64,7 @@ public class ContactCreationTest extends TestBase {
         wd.findElement(By.linkText("add new")).click();
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterClass(alwaysRun = true)
     public void tearDown() throws Exception {
         wd.quit();
 
