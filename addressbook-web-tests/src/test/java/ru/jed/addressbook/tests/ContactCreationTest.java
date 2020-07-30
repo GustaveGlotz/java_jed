@@ -8,7 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.jed.addressbook.model.ContactData;
 
-public class ContactCreationTest {
+public class ContactCreationTest extends TestBase {
     private WebDriver wd;
 
 
